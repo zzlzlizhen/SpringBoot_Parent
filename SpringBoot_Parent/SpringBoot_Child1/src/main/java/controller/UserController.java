@@ -1,11 +1,15 @@
 package controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import com.github.pagehelper.PageInfo;
 
 import entity.User;
+import entity.UserExample;
 import service.UserService;
 
 @Controller
@@ -25,5 +29,38 @@ public class UserController {
 		user.setStatus("1");
 		userService.save(user);
 		return "保存成功";
+	}
+	@RequestMapping(value="/list",method = RequestMethod.GET)
+	@ResponseBody
+	public PageInfo<User> getList(Integer pageNum, Integer pageSize) {
+		System.out.println("-------------进入");
+		System.out.println(pageNum + pageSize);
+		UserExample ue = new UserExample();
+		if(pageNum == null || pageNum == 0) {
+			pageNum = 1;
+		}
+		if(pageSize == null || pageSize == 0) {
+			pageSize = 5;
+		}
+		ue.setPageNum(pageNum);
+		ue.setPageSize(pageSize);
+		PageInfo<User> list = userService.selectList(ue);
+		return list;
+	}
+	@RequestMapping(value="/list2",method = RequestMethod.GET)
+	@ResponseBody
+	public PageInfo<User> getList2(@RequestParam(value = "pageNum",required = false) Integer pageNum, @RequestParam(value = "pageNum",required = false)Integer pageSize) {
+		System.out.println("-------------进入");
+		UserExample ue = new UserExample();
+		if(pageNum == null || pageNum == 0) {
+			pageNum = 1;
+		}
+		if(pageSize == null || pageSize == 0) {
+			pageSize = 5;
+		}
+		ue.setPageNum(pageNum);
+		ue.setPageSize(pageSize);
+		PageInfo<User> list = userService.selectList(ue);
+		return list;
 	}
 }

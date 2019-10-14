@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="mapper.UserMapper">
-
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="entity.User" id="BaseResultMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="pwd" column="pwd"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
     <sql id="Base_Column_List" >
    		id,name,pwd,phone,email,create_time,update_time
     </sql>
 	<insert id="save">
 	    insert into t_user(id,name,pwd,phone,email,create_time,update_time) values(#{user.id},#{user.name},#{user.pwd},#{user.phone},#{user.email},#{user.createTime},#{user.updateTime})
 	</insert>
+    <select id="selectList" parameterType="entity.UserExample"  resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        t_user
+    </select>
 </mapper>

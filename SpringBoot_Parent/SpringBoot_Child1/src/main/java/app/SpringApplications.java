@@ -25,6 +25,10 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
  *需要单独扫描java mapper 此方法用配置xml的方式引入mapper
  * @author zsm
  *
+ *
+ *
+ *
+ *
  */
 @MapperScan("mapper")
 @EnableAsync //开启异步调用
