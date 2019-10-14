@@ -49,7 +49,7 @@ public class UserController {
 	}
 	@RequestMapping(value="/list2",method = RequestMethod.GET)
 	@ResponseBody
-	public PageInfo<User> getList2(@RequestParam(value = "pageNum",required = false) Integer pageNum, @RequestParam(value = "pageNum",required = false)Integer pageSize) {
+	public PageInfo<User> getList2(@RequestParam(value = "pageNum",required = false) Integer pageNum, @RequestParam(value = "pageSize",required = false)Integer pageSize) {
 		System.out.println("-------------进入");
 		UserExample ue = new UserExample();
 		if(pageNum == null || pageNum == 0) {
