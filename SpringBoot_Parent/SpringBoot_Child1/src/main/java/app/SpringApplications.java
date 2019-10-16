@@ -20,17 +20,12 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 /**
  * 默认情况下扫描的是当前包及当前包的子包
  */
-@SpringBootApplication(scanBasePackages = {"controller","interceptor","service","dao"})
+@SpringBootApplication(scanBasePackages = {"controller.*","interceptor","service.*","dao","entity.*","data.source"})
 /**
  *需要单独扫描java mapper 此方法用配置xml的方式引入mapper
  * @author zsm
- *
- *
- *
- *
- *
  */
-@MapperScan("mapper")
+/*@MapperScan("mapper1")*/
 @EnableAsync //开启异步调用
 public class SpringApplications{ //extends WebMvcConfigurerAdapter{
 	//创建FastJson的消息转换器

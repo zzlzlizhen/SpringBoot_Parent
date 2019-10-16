@@ -59,7 +59,7 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", pwd=" + pwd + ", createTime=" + createTime + ", updateTime="
+		return "TUser [id=" + id + ", name=" + name + ", pwd=" + pwd + ", createTime=" + createTime + ", updateTime="
 				+ updateTime + ", phone=" + phone + ", email=" + email + ", status=" + status + "]";
 	}
 }

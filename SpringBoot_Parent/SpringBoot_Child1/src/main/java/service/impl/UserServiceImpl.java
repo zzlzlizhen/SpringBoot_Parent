@@ -11,12 +11,12 @@ import com.github.pagehelper.PageInfo;
 import dao.UserDao;
 import entity.User;
 import entity.UserExample;
-import mapper.UserMapper;
+import mapper1.UserMapper;
 import service.UserService;
 
-@Service
+/*@Service*/
 public class UserServiceImpl implements UserService {
-	@Autowired
+	/*@Autowired
 	UserDao userDao;
 	@Autowired
 	UserMapper userMapper;
@@ -31,5 +31,5 @@ public class UserServiceImpl implements UserService {
 		List<User> list = userMapper.selectList(ue);
 		PageInfo<User> pageInfo = new PageInfo<>(list);
 		return pageInfo;
-	}
+	}*/
 }

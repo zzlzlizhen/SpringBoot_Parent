@@ -8,6 +8,6 @@ import entity.User;
 import entity.UserExample;
 
 public interface UserService {
-	public void save(User user);
-	public PageInfo<User> selectList(UserExample ue);
+/*	public void save(User user);
+	public PageInfo<User> selectList(UserExample ue);*/
 }

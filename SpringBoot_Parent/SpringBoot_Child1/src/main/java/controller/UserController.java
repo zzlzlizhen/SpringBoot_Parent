@@ -12,9 +12,9 @@ import entity.User;
 import entity.UserExample;
 import service.UserService;
 
-@Controller
+/*@Controller*/
 public class UserController {
-	@Autowired
+/*	@Autowired
 	UserService userService;
 	@RequestMapping(value ="/save")
 	@ResponseBody
@@ -62,5 +62,5 @@ public class UserController {
 		ue.setPageSize(pageSize);
 		PageInfo<User> list = userService.selectList(ue);
 		return list;
-	}
+	}*/
 }

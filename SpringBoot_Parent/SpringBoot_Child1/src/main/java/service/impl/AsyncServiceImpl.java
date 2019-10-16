@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import service.AsyncService;
 
+
 @Service
 public class AsyncServiceImpl implements AsyncService {
 	private Random random = new Random();
