@@ -19,11 +19,26 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreParedStatements: 20
-mybatis:
-  mapper-locations: classpath:/mapper/*Mapper.xml
-  config-locations: classpath:mybatis/mybatis-config.xml
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countSql
+#整合邮件发送
+  mail:
+    host: smtp.163.com
+    username: 15810669164@163.com
+    password: zsm13753092416
+    port: 25
+    default-encoding: utf-8
+    protocol: smtp
+    properties:
+      mail:
+        smth:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  mybatis:
+    mapper-locations: classpath:/mapper/*Mapper.xml
+    config-locations: classpath:mybatis/mybatis-config.xml
+  pagehelper:
+    helper-dialect: mysql
+    reasonable: true
+    support-methods-arguments: true
+    params: count=countSql

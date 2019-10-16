@@ -1,4 +1,4 @@
-package controller.remote;
+package dscontroller.remote;
 
 import entity.remote.SysRole;
 import org.springframework.beans.factory.annotation.Autowired;

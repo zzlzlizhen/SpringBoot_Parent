@@ -1,4 +1,4 @@
-package controller.lz;
+package dscontroller.lz;
 
 import entity.lz.TUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import service.lz.TUserService;
-
-import java.util.Date;
 
 
 @Controller
@@ -35,4 +33,5 @@ public class TUserController {
         TUser TUser = TUserService.getUser(id);
         return TUser.toString();
     }
+
 }
