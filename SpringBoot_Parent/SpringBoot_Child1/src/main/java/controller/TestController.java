@@ -1,6 +1,8 @@
 package controller;
+import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.UUID;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
@@ -11,10 +13,14 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import entity.Person;
+import org.springframework.web.multipart.MultipartFile;
 import service.AsyncService;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class TestController {
@@ -70,13 +76,40 @@ public class TestController {
 	
 	@RequestMapping("/frer")
 	public String frer(Model model) {
-		model.addAttribute("name","赵三梅");
+		/*model.addAttribute("name","赵三梅");*/
 		return "show";
 	}
 	@RequestMapping("/thym")
 	public String thy(Model model) {
 		model.addAttribute("word","单词");
 		return "thy";
+	}
+
+	@RequestMapping(value = "/upload",method = RequestMethod.POST)
+	@ResponseBody
+	public String upload(MultipartFile file, HttpServletRequest httpServletRequest){
+		try {
+			//创建文件在服务器端的存放路径
+		/*	String dir = httpServletRequest.getServletContext().getRealPath("/upload");*/
+			String dir = "D:\\upload";
+			//把路径生成一个文件，看看此文件是否存在
+			File fileDir = new File(dir);
+			if(!fileDir.exists()){
+				fileDir.mkdir();
+			}
+			//截取文件上传扩展名
+			String filesuffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+			//获取服务器文件名
+			String fileName = UUID.randomUUID().toString() + filesuffix;
+			File files = new File(fileDir + "/"+fileName);
+			//上传
+			file.transferTo(files);
+		}catch (Exception e){
+			e.printStackTrace();
+			return "文件上传失败";
+		}
+
+		return "ok";
 	}
 
 }
