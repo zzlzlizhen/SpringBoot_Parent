@@ -2,6 +2,7 @@ package controller;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Future;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import entity.Person;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import service.AsyncService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -85,6 +87,34 @@ public class TestController {
 		return "thy";
 	}
 
+	@RequestMapping(value = "/batch/upload",method = RequestMethod.POST)
+	@ResponseBody
+	public String uploadBatch(HttpServletRequest request){
+		//得到传入的文件
+		List<MultipartFile> files = ((MultipartHttpServletRequest) request)
+				.getFiles("file");
+		try {
+			String dir = "D:\\upload\\batch";
+			File fileDir = new File(dir);
+			if(!fileDir.exists()){
+				fileDir.mkdir();
+			}
+			System.out.println(files.size());
+			for(int i = 0; i < files.size(); i++){
+				String filesuffix = files.get(i).getOriginalFilename().substring(files.get(i).getOriginalFilename().lastIndexOf("."));
+				String fileName = UUID.randomUUID().toString() + filesuffix;
+				File file = new File(fileDir + "/"+fileName);
+				//上传
+				files.get(i).transferTo(file);
+			}
+		}catch (Exception e){
+			e.printStackTrace();
+			return "上传失败";
+		}
+
+		return "上传成功";
+	}
+
 	@RequestMapping(value = "/upload",method = RequestMethod.POST)
 	@ResponseBody
 	public String upload(MultipartFile file, HttpServletRequest httpServletRequest){
@@ -108,7 +138,6 @@ public class TestController {
 			e.printStackTrace();
 			return "文件上传失败";
 		}
-
 		return "ok";
 	}
 
