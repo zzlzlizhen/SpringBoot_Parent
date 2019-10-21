@@ -3,6 +3,7 @@ package app;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
 
@@ -19,13 +20,14 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 /**
  * 默认情况下扫描的是当前包及当前包的子包
  */
-@SpringBootApplication(scanBasePackages = {"controller","interceptor","service.*","dao","entity.*","data.source","email","dscontroller.*"})
+@SpringBootApplication(scanBasePackages = {"controller","interceptor","service.*","dao","entity.*","data.source","email","dscontroller.*","com.zsm"})
 /**
  *需要单独扫描java mapper 此方法用配置xml的方式引入mapper
  * @author zsm
  */
 /*@MapperScan("mapper1")*/
 @EnableAsync //开启异步调用
+@EnableCaching //开启缓存
 public class SpringApplications{ //extends WebMvcConfigurerAdapter{
 	//创建FastJson的消息转换器
 	

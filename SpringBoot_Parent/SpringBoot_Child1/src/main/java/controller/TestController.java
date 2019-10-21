@@ -1,11 +1,13 @@
 package controller;
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Future;
 
+import com.zsm.config.WebSocketServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import entity.Person;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 import service.AsyncService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 public class TestController {
 	@Autowired
 	AsyncService asyncService;
+
 	/**
 	 * 定义消息转换器
 	 */
@@ -36,8 +38,10 @@ public class TestController {
 		StringHttpMessageConverter conver = new StringHttpMessageConverter(Charset.forName("utf-8"));
 		return conver;
 	}
+
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	@RequestMapping(value="/show")
+
+	@RequestMapping(value = "/show")
 	@ResponseBody
 	public String show() {
 		logger.debug("debug日志");
@@ -47,8 +51,8 @@ public class TestController {
 		/* int a = 5/0; */
 		return "show 你好";
 	}
-	
-	@RequestMapping(value="/person")
+
+	@RequestMapping(value = "/person")
 	@ResponseBody
 	public Object person() {
 		Person ps = new Person();
@@ -57,57 +61,59 @@ public class TestController {
 		ps.setName("赵三梅");
 		return ps;
 	}
-	@RequestMapping(value="/async")
+
+	@RequestMapping(value = "/async")
 	@ResponseBody
 	public String async() throws Exception {
 		long start = System.currentTimeMillis();
 		Future<String> task1 = asyncService.doTask1();
 		Future<String> task2 = asyncService.doTask2();
 		Future<String> task3 = asyncService.doTask3();
-		
-		while(true) {
-			if(task1.isDone() && task2.isDone() && task3.isDone()) {
+
+		while (true) {
+			if (task1.isDone() && task2.isDone() && task3.isDone()) {
 				break;
 			}
 			Thread.sleep(1000);
 		}
 		long end = System.currentTimeMillis();
 		System.out.println("任务结束总时间 :" + (end - start) + "毫秒");
-		return "总任务结束时间为:" + (end -start) ;
+		return "总任务结束时间为:" + (end - start);
 	}
-	
+
 	@RequestMapping("/frer")
 	public String frer(Model model) {
 		/*model.addAttribute("name","赵三梅");*/
 		return "show";
 	}
+
 	@RequestMapping("/thym")
 	public String thy(Model model) {
-		model.addAttribute("word","单词");
+		model.addAttribute("word", "单词");
 		return "thy";
 	}
 
-	@RequestMapping(value = "/batch/upload",method = RequestMethod.POST)
+	@RequestMapping(value = "/batch/upload", method = RequestMethod.POST)
 	@ResponseBody
-	public String uploadBatch(HttpServletRequest request){
+	public String uploadBatch(HttpServletRequest request) {
 		//得到传入的文件
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request)
 				.getFiles("file");
 		try {
 			String dir = "D:\\upload\\batch";
 			File fileDir = new File(dir);
-			if(!fileDir.exists()){
+			if (!fileDir.exists()) {
 				fileDir.mkdir();
 			}
 			System.out.println(files.size());
-			for(int i = 0; i < files.size(); i++){
+			for (int i = 0; i < files.size(); i++) {
 				String filesuffix = files.get(i).getOriginalFilename().substring(files.get(i).getOriginalFilename().lastIndexOf("."));
 				String fileName = UUID.randomUUID().toString() + filesuffix;
-				File file = new File(fileDir + "/"+fileName);
+				File file = new File(fileDir + "/" + fileName);
 				//上传
 				files.get(i).transferTo(file);
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "上传失败";
 		}
@@ -115,30 +121,31 @@ public class TestController {
 		return "上传成功";
 	}
 
-	@RequestMapping(value = "/upload",method = RequestMethod.POST)
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	@ResponseBody
-	public String upload(MultipartFile file, HttpServletRequest httpServletRequest){
+	public String upload(MultipartFile file, HttpServletRequest httpServletRequest) {
 		try {
 			//创建文件在服务器端的存放路径
 		/*	String dir = httpServletRequest.getServletContext().getRealPath("/upload");*/
 			String dir = "D:\\upload";
 			//把路径生成一个文件，看看此文件是否存在
 			File fileDir = new File(dir);
-			if(!fileDir.exists()){
+			if (!fileDir.exists()) {
 				fileDir.mkdir();
 			}
 			//截取文件上传扩展名
 			String filesuffix = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
 			//获取服务器文件名
 			String fileName = UUID.randomUUID().toString() + filesuffix;
-			File files = new File(fileDir + "/"+fileName);
+			File files = new File(fileDir + "/" + fileName);
 			//上传
 			file.transferTo(files);
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return "文件上传失败";
 		}
 		return "ok";
 	}
+
 
 }

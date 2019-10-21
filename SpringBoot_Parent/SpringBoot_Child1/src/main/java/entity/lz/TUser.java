@@ -1,6 +1,8 @@
 package entity.lz;
 
-public class TUser {
+import java.io.Serializable;
+
+public class TUser implements Serializable{
     private String id;
     private String name;
     private String pwd;

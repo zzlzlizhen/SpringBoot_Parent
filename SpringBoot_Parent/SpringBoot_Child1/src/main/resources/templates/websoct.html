@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <title>Test My WebSocket</title>
 </head>
+
+
 <body>
-<p>多文件上传</p>
-<form method="POST" enctype="multipart/form-data" action="/batch/upload">
-	<p>文件1：<input type="file" name="file" /></p>
-	<p>文件2：<input type="file" name="file" /></p>
-	<p><input type="submit" value="上传" /></p>
-	<input type="text" name="soc" id="checkUserName"/>
-</form>
+Test<br/>
+<input id="text" type="text" />
+<div id="message">
+</div>
 </body>
-</html>
 
 <script>
     var socket;
@@ -32,7 +29,7 @@
         //获得消息事件
         socket.onmessage = function(msg) {
             console.log("-------"+msg.data);
-            $("#checkUserName").val(msg.data)
+            $("#text").val(msg.data);
             //发现消息进入    开始处理前端触发逻辑
         };
         //关闭事件
