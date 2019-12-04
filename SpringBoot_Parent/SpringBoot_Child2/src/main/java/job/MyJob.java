@@ -8,13 +8,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * ÈÎÎñµ÷¶È
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @author zsm
  */
 @Component
-@EnableScheduling //¿ªÆôÈÎÎñµ÷¶È
+@EnableScheduling //å®šæ—¶
 public class MyJob {
-	@Scheduled(fixedRate = 1000) //Ã¿1000ºÁÃë´òÓ¡Ò»´Î
+	@Scheduled(fixedRate = 1000)
 	public void run() {
 		System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 	}

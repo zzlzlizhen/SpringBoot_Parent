@@ -95,5 +95,13 @@
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-websocket</artifactId>
       </dependency>
+
+      <dependency>
+          <groupId>com.github.jkutner</groupId>
+          <artifactId>tomcat-redis-session</artifactId>
+          <version>8.5.5.0</version>
+      </dependency>
+
+
   </dependencies>
 </project>

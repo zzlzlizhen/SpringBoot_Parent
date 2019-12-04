@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TestController {
 	/*
 	 * @RequestMapping("/index") public String show(Model model) {
-	 * model.addAttribute("name","李四"); return "index"; }
+	 * model.addAttribute("name","zsmzsm"); return "index"; }
 	 */
 	@RequestMapping("/frer")
 	public String frer(Model model) {
-		model.addAttribute("name","赵三梅");
+		model.addAttribute("name","zsmzsm");
 		return "/show";
 	}
 	@RequestMapping("/thym")
 	public String thy(Model model) {
-		model.addAttribute("word","单词");
+		model.addAttribute("word","word");
 		return "/thy";
 	}
 }
